@@ -3,5 +3,7 @@
 
     <string name="app_name">Seminario</string>
     <string name="hello_world">Hola Mundo!</string>
+    <string name="how_are_you">Como estas?</string>
+    <string name="click_me">Haz Click</string>
 
 </resources>
