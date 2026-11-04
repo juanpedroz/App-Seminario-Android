@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
     ) {
         super.onRestoreInstanceState(savedInstanceState, persistentState)
         Log.i("MainActivity", "onRestoreInstanceState")
-        counter = savedInstanceState.getInt("counter")
+        counter = savedInstanceState?.getInt("counter") ?: 0
         binding.counterTextView.text = counter.toString()
 
     }
