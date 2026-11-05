@@ -12,5 +12,13 @@
     <string name="movie_rating_format">Rating: %1$.1f</string>
     <string name="movie_release_date_format">Release: %1$s</string>
     <string name="movie_release_date_unknown">Unknown</string>
-    <string name="movie_id_toast">Movie %1$d</string>
+    <string name="detail_title">Detail</string>
+    <string name="error_loading_detail">Could not load details</string>
+    <string name="back">Back</string>
+    <string name="no_overview">No overview available</string>
+    <string name="movie_runtime_format">Runtime: %1$d min</string>
+    <string name="movie_runtime_unknown">Unknown runtime</string>
+    <string name="genres_format">Genres: %1$s</string>
+    <string name="no_genres">No genres</string>
+    <string name="detail_backdrop_description">Backdrop of %1$s</string>
 </resources>

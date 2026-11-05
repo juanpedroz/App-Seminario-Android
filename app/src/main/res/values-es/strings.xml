@@ -14,6 +14,14 @@
     <string name="movie_rating_format">Puntaje: %1$.1f</string>
     <string name="movie_release_date_format">Estreno: %1$s</string>
     <string name="movie_release_date_unknown">Desconocida</string>
-    <string name="movie_id_toast">Película %1$d</string>
+    <string name="detail_title">Detalle</string>
+    <string name="error_loading_detail">No se pudo cargar el detalle</string>
+    <string name="back">Volver</string>
+    <string name="no_overview">Sin descripción disponible</string>
+    <string name="movie_runtime_format">Duración: %1$d min</string>
+    <string name="movie_runtime_unknown">Duración desconocida</string>
+    <string name="genres_format">Géneros: %1$s</string>
+    <string name="no_genres">Sin géneros</string>
+    <string name="detail_backdrop_description">Imagen de fondo de %1$s</string>
 
 </resources>
