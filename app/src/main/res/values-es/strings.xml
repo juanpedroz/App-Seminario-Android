@@ -5,5 +5,15 @@
     <string name="hello_world">Hola Mundo!</string>
     <string name="how_are_you">Como estas?</string>
     <string name="click_me">Haz Click</string>
+    <string name="popular_movies_title">Películas populares</string>
+    <string name="error_loading_movies">No se pudieron cargar las películas</string>
+    <string name="retry">Reintentar</string>
+    <string name="empty_movies">No hay películas para mostrar</string>
+    <string name="movie_poster">Póster de película</string>
+    <string name="movie_poster_description">Póster de %1$s</string>
+    <string name="movie_rating_format">Puntaje: %1$.1f</string>
+    <string name="movie_release_date_format">Estreno: %1$s</string>
+    <string name="movie_release_date_unknown">Desconocida</string>
+    <string name="movie_id_toast">Película %1$d</string>
 
 </resources>

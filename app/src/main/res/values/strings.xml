@@ -3,4 +3,14 @@
     <string name="hello_world">Hello World!</string>
     <string name="how_are_you">How are you</string>
     <string name="click_me">Click me</string>
+    <string name="popular_movies_title">Popular movies</string>
+    <string name="error_loading_movies">Could not load movies</string>
+    <string name="retry">Retry</string>
+    <string name="empty_movies">No movies to show</string>
+    <string name="movie_poster">Movie poster</string>
+    <string name="movie_poster_description">Poster of %1$s</string>
+    <string name="movie_rating_format">Rating: %1$.1f</string>
+    <string name="movie_release_date_format">Release: %1$s</string>
+    <string name="movie_release_date_unknown">Unknown</string>
+    <string name="movie_id_toast">Movie %1$d</string>
 </resources>

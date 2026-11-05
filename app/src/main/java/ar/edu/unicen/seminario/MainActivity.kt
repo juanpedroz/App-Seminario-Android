@@ -1,103 +1,34 @@
 package ar.edu.unicen.seminario
 
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.Log
-import android.widget.Button
-import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import ar.edu.unicen.seminario.databinding.ActivityMainBinding
-import kotlin.math.log
+import ar.edu.unicen.seminario.ui.home.HomeFragment
+import dagger.hilt.android.AndroidEntryPoint
 
-class MainActivity : AppCompatActivity() {
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity(), HomeFragment.OnMovieClickListener {
 
-    private var counter: Int = 0
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //enableEdgeToEdge()
-
-        Log.i("MainActivity", "onCreate")
-
         binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        setContentView(binding.root) // tambien puede ser main porque es el id de la raiz
-
-        //setContentView(R.layout.activity_main)
-
-        //val textHelloWorld : TextView = findViewById(R.id.hellow_world_text_view)
-
-        //val buttonClickMe : Button = findViewById(R.id.click_me_button)
-
-//        buttonClickMe.setOnClickListener {
-//            //counter++
-//            textHelloWorld.text = getString(R.string.how_are_you)
-//        }
-
-        binding.clickMeButton.setOnClickListener {
-            counter++
-            binding.hellowWorldTextView.text = getString(R.string.how_are_you)
-            binding.counterTextView.text = counter.toString()
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, HomeFragment())
+                .commit()
         }
-
-
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-//            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-//            insets
-//            }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-
-        Log.i("MainActivity", "onSaveInstanceState")
-
-        outState.putInt("counter", counter)
-    }
-
-    override fun onRestoreInstanceState(
-        savedInstanceState: Bundle?,
-        persistentState: PersistableBundle?
-    ) {
-        super.onRestoreInstanceState(savedInstanceState, persistentState)
-        Log.i("MainActivity", "onRestoreInstanceState")
-        counter = savedInstanceState?.getInt("counter") ?: 0
-        binding.counterTextView.text = counter.toString()
-
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-        Log.i("MainActivity", "onStar")
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        Log.i("MainActivity", "onResume")
-    }
-
-    override fun onStop() {
-        super.onStop()
-
-        Log.i("MainActivity", "onStop")
-    }
-
-    override fun onPause() {
-        super.onPause()
-
-        Log.i("MainActivity", "onPause")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        Log.i("MainActivity", "onDestroy")
+    override fun onMovieClick(movieId: Int) {
+        Toast.makeText(
+            this,
+            getString(R.string.movie_id_toast, movieId),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 }
