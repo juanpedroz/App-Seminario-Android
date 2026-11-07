@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ar.edu.unicen.seminario.R
@@ -39,7 +40,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun setupRecyclerView() {
         binding.moviesRecyclerView.apply {
-            layoutManager = LinearLayoutManager(requireContext())
+            val columns = resources.getInteger(R.integer.movie_grid_columns)
+            layoutManager = GridLayoutManager(requireContext(), columns)
             adapter = movieAdapter
             setHasFixedSize(true)
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -74,8 +76,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     }
                 }
                 launch {
-                    viewModel.errorEvents.collect { message ->
-                        Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).show()
+                    viewModel.errorEvents.collect { messageRes ->
+                        Snackbar.make(
+                            binding.root,
+                            getString(messageRes),
+                            Snackbar.LENGTH_LONG
+                        ).setAction(R.string.retry) {
+                            viewModel.retry()
+                        }.show()
                     }
                 }
             }
@@ -86,11 +94,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.swipeRefresh.isRefreshing = state.isRefreshing
         binding.progressBar.isVisible = state.isLoading
         binding.paginationProgressBar.isVisible = state.isLoadingMore
-        binding.errorContainer.isVisible = state.errorMessage != null && state.movies.isEmpty()
-        binding.errorText.text = state.errorMessage ?: getString(R.string.error_loading_movies)
+        binding.errorContainer.isVisible = state.errorMessageRes != null && state.movies.isEmpty()
+        binding.errorText.text = state.errorMessageRes?.let { getString(it) }
+            ?: getString(R.string.error_loading_movies)
         binding.emptyText.isVisible = !state.isLoading &&
             state.movies.isEmpty() &&
-            state.errorMessage == null
+            state.errorMessageRes == null
         binding.moviesRecyclerView.isVisible = state.movies.isNotEmpty()
         movieAdapter.submitList(state.movies)
     }

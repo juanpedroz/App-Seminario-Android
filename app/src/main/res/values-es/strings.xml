@@ -7,6 +7,8 @@
     <string name="click_me">Haz Click</string>
     <string name="popular_movies_title">Películas populares</string>
     <string name="error_loading_movies">No se pudieron cargar las películas</string>
+    <string name="error_no_internet">No hay conexión a internet. Verificá tu conexión e intentá de nuevo.</string>
+    <string name="error_generic">Ocurrió un error inesperado. Intentá de nuevo.</string>
     <string name="retry">Reintentar</string>
     <string name="empty_movies">No hay películas para mostrar</string>
     <string name="movie_poster">Póster de película</string>

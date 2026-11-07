@@ -4,6 +4,7 @@ import android.util.Log
 import ar.edu.unicen.seminario.BuildConfig
 import ar.edu.unicen.seminario.data.remote.api.MovieApiService
 import ar.edu.unicen.seminario.data.remote.interceptor.ApiKeyInterceptor
+import ar.edu.unicen.seminario.data.remote.interceptor.LanguageInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -42,10 +43,12 @@ object NetworkModule {
     @Singleton
     fun provideOkHttpClient(
         apiKeyInterceptor: ApiKeyInterceptor,
+        languageInterceptor: LanguageInterceptor,
         loggingInterceptor: HttpLoggingInterceptor
     ): OkHttpClient =
         OkHttpClient.Builder()
             .addInterceptor(apiKeyInterceptor)
+            .addInterceptor(languageInterceptor)
             .addInterceptor(loggingInterceptor)
             .build()
 

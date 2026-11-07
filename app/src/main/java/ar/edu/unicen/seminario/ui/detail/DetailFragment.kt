@@ -74,7 +74,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                 binding.detailProgressBar.isVisible = false
                 binding.detailContent.isVisible = false
                 binding.detailErrorContainer.isVisible = true
-                binding.detailErrorText.text = state.message
+                binding.detailErrorText.text = state.messageRes?.let { getString(it) }
                     ?: getString(R.string.error_loading_detail)
             }
         }

@@ -3,6 +3,7 @@ package ar.edu.unicen.seminario.ui.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.unicen.seminario.domain.repository.MovieRepository
+import ar.edu.unicen.seminario.ui.common.toUserMessageRes
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -23,8 +24,8 @@ class HomeViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(HomeUiState(isLoading = true))
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
 
-    private val _errorEvents = MutableSharedFlow<String>()
-    val errorEvents: SharedFlow<String> = _errorEvents.asSharedFlow()
+    private val _errorEvents = MutableSharedFlow<Int>()
+    val errorEvents: SharedFlow<Int> = _errorEvents.asSharedFlow()
 
     private var currentPage = 0
     private var totalPages = 1
@@ -61,7 +62,7 @@ class HomeViewModel @Inject constructor(
                     isLoading = refresh && it.movies.isEmpty(),
                     isRefreshing = refresh && it.movies.isNotEmpty(),
                     isLoadingMore = !refresh,
-                    errorMessage = null
+                    errorMessageRes = null
                 )
             }
 
@@ -80,23 +81,23 @@ class HomeViewModel @Inject constructor(
                             isLoading = false,
                             isRefreshing = false,
                             isLoadingMore = false,
-                            errorMessage = null,
+                            errorMessageRes = null,
                             endReached = currentPage >= totalPages
                         )
                     }
                 }
                 .onFailure { error ->
-                    val message = error.message ?: "Error al cargar películas"
+                    val messageRes = error.toUserMessageRes()
                     _uiState.update {
                         it.copy(
                             isLoading = false,
                             isRefreshing = false,
                             isLoadingMore = false,
-                            errorMessage = if (it.movies.isEmpty()) message else null
+                            errorMessageRes = if (it.movies.isEmpty()) messageRes else null
                         )
                     }
                     if (_uiState.value.movies.isNotEmpty()) {
-                        _errorEvents.emit(message)
+                        _errorEvents.emit(messageRes)
                     }
                 }
         }

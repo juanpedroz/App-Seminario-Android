@@ -5,7 +5,9 @@ import androidx.lifecycle.viewModelScope
 import ar.edu.unicen.seminario.domain.model.MovieDetail
 import ar.edu.unicen.seminario.domain.repository.MovieRepository
 import ar.edu.unicen.seminario.ui.common.UiState
+import ar.edu.unicen.seminario.ui.common.toUserMessageRes
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,19 +23,25 @@ class DetailViewModel @Inject constructor(
     val uiState: StateFlow<UiState<MovieDetail>> = _uiState.asStateFlow()
 
     private var loadedMovieId: Int? = null
+    private var loadJob: Job? = null
 
     fun loadMovieDetail(movieId: Int) {
         if (loadedMovieId == movieId && _uiState.value is UiState.Success) {
             return
         }
+        if (loadedMovieId == movieId && loadJob?.isActive == true) {
+            // si ya se está cargando la misma peli, no la pido de nuevo
+            return
+        }
 
+        loadJob?.cancel()
         loadedMovieId = movieId
 
-        viewModelScope.launch {
+        loadJob = viewModelScope.launch {
             _uiState.value = UiState.Loading
             repository.getMovieDetail(movieId)
                 .onSuccess { _uiState.value = UiState.Success(it) }
-                .onFailure { _uiState.value = UiState.Error(it.message) }
+                .onFailure { _uiState.value = UiState.Error(it.toUserMessageRes()) }
         }
     }
 

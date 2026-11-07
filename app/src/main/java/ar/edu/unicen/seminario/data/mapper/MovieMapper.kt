@@ -15,29 +15,29 @@ class MovieMapper @Inject constructor() {
     fun toDomain(dto: MovieDto): Movie = Movie(
         id = dto.id,
         title = dto.title,
-        overview = dto.overview,
+        overview = dto.overview.orNullIfBlank(),
         posterUrl = buildPosterUrl(dto.posterPath),
         backdropUrl = buildBackdropUrl(dto.backdropPath),
-        releaseDate = dto.releaseDate,
+        releaseDate = dto.releaseDate.orNullIfBlank(),
         voteAverage = dto.voteAverage,
         voteCount = dto.voteCount,
         popularity = dto.popularity,
-        originalLanguage = dto.originalLanguage,
+        originalLanguage = dto.originalLanguage.orNullIfBlank(),
         genreIds = dto.genreIds.orEmpty()
     )
 
     fun toDomain(dto: MovieDetailDto): MovieDetail = MovieDetail(
         id = dto.id,
         title = dto.title,
-        overview = dto.overview,
+        overview = dto.overview.orNullIfBlank(),
         posterUrl = buildPosterUrl(dto.posterPath),
         backdropUrl = buildBackdropUrl(dto.backdropPath),
-        releaseDate = dto.releaseDate,
+        releaseDate = dto.releaseDate.orNullIfBlank(),
         runtime = dto.runtime,
         voteAverage = dto.voteAverage,
         voteCount = dto.voteCount,
-        status = dto.status,
-        tagline = dto.tagline,
+        status = dto.status.orNullIfBlank(),
+        tagline = dto.tagline.orNullIfBlank(),
         genres = dto.genres.orEmpty().map { it.toDomain() }
     )
 
@@ -54,10 +54,13 @@ class MovieMapper @Inject constructor() {
     )
 
     private fun buildPosterUrl(path: String?): String? =
-        path?.let { "$POSTER_BASE_URL$it" }
+        path.orNullIfBlank()?.let { "$POSTER_BASE_URL$it" }
 
     private fun buildBackdropUrl(path: String?): String? =
-        path?.let { "$BACKDROP_BASE_URL$it" }
+        path.orNullIfBlank()?.let { "$BACKDROP_BASE_URL$it" }
+
+    // TMDB manda "" en vez de null cuando falta un dato
+    private fun String?.orNullIfBlank(): String? = this?.takeIf { it.isNotBlank() }
 
     private companion object {
         const val POSTER_BASE_URL = "https://image.tmdb.org/t/p/w500"

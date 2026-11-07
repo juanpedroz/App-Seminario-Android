@@ -32,10 +32,8 @@ android {
 
     buildTypes {
         release {
-            optimization {
-                enable = true
-                packageScope = setOf("androidx.**", "kotlin.**", "kotlinx.**")
-            }
+            // La optimización experimental de AGP 9 rompía la app en release
+            // (IllegalAccessError con kotlin.sequences), así que queda la config por defecto.
         }
     }
     compileOptions {

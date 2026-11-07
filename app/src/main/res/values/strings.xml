@@ -5,6 +5,8 @@
     <string name="click_me">Click me</string>
     <string name="popular_movies_title">Popular movies</string>
     <string name="error_loading_movies">Could not load movies</string>
+    <string name="error_no_internet">No internet connection. Check your connection and try again.</string>
+    <string name="error_generic">Something went wrong. Please try again.</string>
     <string name="retry">Retry</string>
     <string name="empty_movies">No movies to show</string>
     <string name="movie_poster">Movie poster</string>
